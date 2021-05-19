@@ -47,8 +47,9 @@
         await LoadData();
     }
 
-    public void Refresh()
+    public async Task Refresh()
     {
+        await LoadData();
         this.StateHasChanged();
     }
 

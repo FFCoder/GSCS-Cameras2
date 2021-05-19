@@ -7,6 +7,7 @@
 <button style="margin-bottom: 1rem" class="btn btn-success btn-lg" @onclick="OpenCreate">
     Create
 </button>
+<button style="margin-bottom: 1rem" class="btn btn-lg btn-info" @onclick="Refesh">Refresh</button>
 @* 
     TODO: Fix the Refresh of Actions. Currently Adding and Deleting Schools does not refresh table.  
 *@
@@ -27,5 +28,9 @@
             StateHasChanged();
         }
         
+    }
+    void Refesh(){
+        SchoolsTable.Refresh();
+        StateHasChanged();
     }
 }
