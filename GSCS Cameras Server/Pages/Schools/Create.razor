@@ -1,0 +1,26 @@
+@page "/Schools/Create"
+@using DTO;
+@using GSCS_Cameras_Server.Services
+@inject SchoolService _service;
+
+<EditForm Model="school" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="Name">Name: </label>
+        <InputText id="Name" @bind-Value="school.Name"/>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    [CascadingParameter]
+    public BlazoredModalInstance Modal { get; set; }
+    School school = new School();
+
+    void HandleSubmit()
+    {
+        _service.Add(school);
+        Modal.CloseAsync(ModalResult.Ok<School>(school));
+    }
+}

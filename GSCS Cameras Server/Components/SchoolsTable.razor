@@ -1,0 +1,62 @@
+@using DTO
+@using GSCS_Cameras_Server.Services
+@inject SchoolService _schoolService;
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th>School Name</th>
+        <th>Number of Cameras</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (School school in Schools)
+    {
+        <tr>
+            <td>@school.Name</td>
+            @if (!@school.Cameras.Any())
+            {
+                <td style="color: #ff0000">@school.Cameras.Count()</td>
+            }
+            else
+            {
+                <td>@school.Cameras.Count()</td>
+            }
+            <td>
+                <div class="btn-grp">
+                    <a href="Schools/@school.Id" class="btn btn-primary">Details</a>
+                    <button class="btn btn-danger" @onclick="() => DeleteSchool(school)">Delete</button>
+                </div>
+            </td>
+            
+        </tr>
+    }
+    </tbody>
+</table>
+
+@code {
+    List<School> Schools { get; set; }
+
+    async Task LoadData()
+    {
+        Schools = (List<School>) await _schoolService.GetAllAsync();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    public void Refresh()
+    {
+        this.StateHasChanged();
+    }
+
+
+    void DeleteSchool(School school)
+    {
+        _schoolService.Remove(school);
+        Refresh();
+    }
+
+}

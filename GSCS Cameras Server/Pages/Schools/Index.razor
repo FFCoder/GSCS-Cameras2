@@ -1,0 +1,31 @@
+@page "/Schools/"
+@using DTO
+@using GSCS_Cameras_Server.Services
+@using GSCS_Cameras_Server.Components
+@inject SchoolService _service;
+<h3>Index</h3>
+<button style="margin-bottom: 1rem" class="btn btn-success btn-lg" @onclick="OpenCreate">
+    Create
+</button>
+@* 
+    TODO: Fix the Refresh of Actions. Currently Adding and Deleting Schools does not refresh table.  
+*@
+<SchoolsTable @ref="SchoolsTable"/>
+
+@code {
+    [CascadingParameter] public IModalService Modal { get; set; }
+    protected SchoolsTable SchoolsTable;
+
+    async Task OpenCreate()
+    {
+        var createModal = Modal.Show<Create>("Create School");
+        var result = await createModal.Result;
+
+        if (!result.Cancelled)
+        {
+            SchoolsTable.Refresh();
+            StateHasChanged();
+        }
+        
+    }
+}

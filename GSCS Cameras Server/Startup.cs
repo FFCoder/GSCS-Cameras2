@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using GSCS_Cameras_Server.Areas.Identity;
 using GSCS_Cameras_Server.Data;
+using Blazored.Modal;
+using GSCS_Cameras_Server.Services;
 
 namespace GSCS_Cameras_Server
 {
@@ -42,6 +44,11 @@ namespace GSCS_Cameras_Server
                 .AddScoped<AuthenticationStateProvider,
                     RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddBlazoredModal();
+            services.AddHttpClient<CameraService>();
+            services.AddScoped <CameraService>();
+            services.AddScoped<SchoolService>();
+            
             services.AddSingleton<WeatherForecastService>();
         }
 

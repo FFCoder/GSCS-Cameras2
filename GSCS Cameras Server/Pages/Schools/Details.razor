@@ -1,0 +1,26 @@
+@page "/Schools/{Id:int}"
+@using GSCS_Cameras_Server.Services
+@using DTO
+@inject SchoolService _service
+<h3>@_school.Name</h3>
+
+<div class="cameras">
+    <div class="card"></div>
+</div>
+@* TODO: Add the needed Logic. *@
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private School _school = new School();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    async Task LoadData()
+    {
+        _school = await _service.GetAsync(Id);
+    }
+}

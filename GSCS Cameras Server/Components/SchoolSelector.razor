@@ -1,0 +1,26 @@
+@using DTO
+@using GSCS_Cameras_Server.Services
+@using System.Collections
+@inject SchoolService _service
+
+<InputSelect @bind-Value="_school">
+    @foreach (School school in _schools)
+    {
+        <option value="@school.Id">@school.Name</option>
+    }
+</InputSelect>
+
+@code {
+    IEnumerable<School> _schools = new List<School>();
+    School _school = new School();
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadData();
+    }
+
+    public async Task LoadData()
+    {
+        _schools = await _service.GetAllAsync();
+    }
+
+}
