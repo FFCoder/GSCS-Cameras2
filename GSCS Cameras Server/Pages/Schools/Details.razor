@@ -4,15 +4,40 @@
 @inject SchoolService _service
 <h3>@_school.Name</h3>
 
-<div class="cameras">
-    <div class="card"></div>
-</div>
-@* TODO: Add the needed Logic. *@
+@if (_school.Cameras.Any())
+{
+    <table class="table">
+        <thead class="thead-dark">
+    
+        </thead>
+        <tbody>
+        @foreach (var camera in _school.Cameras)
+        {
+            <tr>
+                <td>@camera.Name</td>
+            </tr>
+        }
+        </tbody>
+
+    </table>
+}
+else
+{
+    <div class="alert alert-danger"> There are no cameras for this school. Would you like to <button class="btn btn-primary" @onclick="() => ">Create a Camera</button></div>
+}
+
 @code {
     [Parameter]
     public int Id { get; set; }
+    [CascadingParameter]
+    public BlazoredModalInstance Modal { get; set; }
 
     private School _school = new School();
+
+    protected void LaunchCreate()
+    {
+        
+    }
 
     protected override async Task OnInitializedAsync()
     {

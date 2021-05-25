@@ -3,12 +3,12 @@
 @using GSCS_Cameras_Server.Services
 @inject SchoolService _service;
 
-<EditForm Model="school" OnValidSubmit="HandleSubmit">
+<EditForm Model="_school" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
     <div class="form-group">
         <label for="Name">Name: </label>
-        <InputText id="Name" @bind-Value="school.Name"/>
+        <InputText id="Name" @bind-Value="_school.Name"/>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </EditForm>
@@ -16,11 +16,11 @@
 @code {
     [CascadingParameter]
     public BlazoredModalInstance Modal { get; set; }
-    School school = new School();
+    private readonly School _school = new School();
 
     void HandleSubmit()
     {
-        _service.Add(school);
-        Modal.CloseAsync(ModalResult.Ok<School>(school));
+        _service.Add(_school);
+        Modal.CloseAsync(ModalResult.Ok<School>(_school));
     }
 }
